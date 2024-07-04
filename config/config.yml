@@ -1,0 +1,20 @@
+---
+API:
+  server:
+    port: :8080
+    readTimeout: 120s
+    writeTimeout: 10s
+    gracefulShutdownTimeout: 5s
+  openAPIFile: patAi.openapi3.yaml
+  openAPISwaggerUI: true
+  serverBaseURL: http://localhost:8080
+  allowedOrigins: 
+    - "http://localhost:3000"
+
+logger:
+  development: true
+  disableCaller: false
+  disableStacktrace: false
+  encoding: console
+  level: info
+

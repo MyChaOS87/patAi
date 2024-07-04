@@ -1,0 +1,9 @@
+services:
+  patAi:
+    container_name: patAi
+    build:
+      context: ./
+      dockerfile: build/patAi/Dockerfile
+    restart: always
+    ports:
+      - "8080:8080"
