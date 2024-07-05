@@ -50,7 +50,7 @@ func (s *Server) Run(ctx context.Context) error {
 	}
 
 	for _, r := range s.echo.Routes() {
-		log.Infof("Route: %s", r.Path)
+		log.Infof("Route: %s", s.api.ServerBaseURL+r.Path)
 	}
 
 	go func() {

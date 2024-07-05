@@ -1,5 +1,5 @@
 services:
-  patAi:
+  patai:
     container_name: patAi
     build:
       context: ./

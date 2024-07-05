@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	envPrefix = "patAi"
+	envPrefix = "PATAI"
 )
 
 // Config struct.

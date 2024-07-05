@@ -37,7 +37,7 @@ func (s *Server) mapHandlers() error {
 	openapi.MapDocumentationRoutes(
 		v0.Group(V0OpenAPI),
 		openapi.NewHandlers(),
-		s.api.OpenAPIFile, s.api.OpenAPISwaggerUI, struct{ ServerBaseURL string }{ServerBaseURL: s.api.ServerBaseURL})
+		s.api.OpenAPIFile, s.api.OpenAPISwaggerUI, struct{ ServerBaseURL string }{ServerBaseURL: s.api.ServerBaseURL + v0BaseURI})
 
 	for _, r := range s.childRouters {
 		r.AddRoutes(v0)

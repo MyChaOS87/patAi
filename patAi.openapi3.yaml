@@ -1,5 +1,100 @@
 openapi: 3.0.0
 info:
-  title: Home API
-  version: 1.0.0
+  title: Patent Valuation API
+  version: 0.0.1-alpha1
   
+servers:
+  - url: {{ .ServerBaseURL }}
+paths:
+  /patents:
+    get:
+      summary: Get all patent valuation jobs
+      security:
+        - api_key: [rw]
+      responses:
+        '200':
+          description: A list of patent valuation jobs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Patent'
+        '401':
+          description: Authentication required
+    post:
+      summary: Upload a new patent valuation job
+      security:
+        - api_key: [rw]
+      requestBody:
+        required: true
+        content:
+          text/plain:
+            example: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            schema:
+              type: string
+      responses:
+        '201':
+          description: Patent created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Patent'
+        '429':
+          description: quota exceeded
+        '401':
+          description: Authentication required
+  /patents/{patentId}:
+    get:
+      summary: Get a patent valuation job by ID
+      security:
+        - api_key: [rw]
+      parameters:
+        - name: patentId
+          in: path
+          required: true
+          description: The ID of the patent valuation job
+          schema:
+            type: string
+      responses:
+        '200':
+          description: A patent valuation job
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Patent'       
+        '400':
+          description: Malformed patent ID
+        '401':
+          description: Authentication required
+        '404':
+          description: patent valuation job not found
+components:  
+  schemas:
+    Patent:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          enum:
+            - pending
+            - finished
+            - failed
+            - unknown
+        valuation:
+          type: number
+          format: int32
+      required:
+        - id
+        - status
+  securitySchemes:
+    api_key:
+      type: apiKey
+      in: header
+      name: X-API-Key
+security:
+  - api_key: 
+    - rw
